@@ -73,8 +73,8 @@ public class OrderRepository {
 
 
      public void deletePartnerIdFromDB(String partnerId){
-         partnerHashMap.remove(partnerId);
-         orderPartnerPairMap.remove(partnerId);
+         if(partnerHashMap.containsKey(partnerId)) partnerHashMap.remove(partnerId);
+         if(orderPartnerPairMap.containsKey(partnerId)) orderPartnerPairMap.remove(partnerId);
      }
 
      public void deleteOrderByIdFromDB(String orderId){
