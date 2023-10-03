@@ -18,7 +18,8 @@ public class OrderRepository {
      }
 
      public void addPartnerToDB(String partnerId){
-         partnerHashMap.put(partnerId,new DeliveryPartner(partnerId));
+         DeliveryPartner deliveryPartner = new DeliveryPartner(partnerId);
+         partnerHashMap.put(partnerId,deliveryPartner);
      }
 
      public void addOrderPartnerPairToDB(String orderId, String partnerId){
@@ -40,7 +41,8 @@ public class OrderRepository {
      }
 
      public DeliveryPartner getPartnerByIdFromDB(String partnerId){
-         return partnerHashMap.get(partnerId);
+         DeliveryPartner deliveryPartner = partnerHashMap.get(partnerId);
+         return deliveryPartner;
      }
 
      public List<String> getOrderCountByPartnerIdFromDB(String partnerId){
@@ -61,12 +63,12 @@ public class OrderRepository {
      }
 
      public int getCountOfUnassignedOrdersFromDB(){
-         int unassignedCount = 0;
+         int assignedCount = 0;
          for(String key : orderPartnerPairMap.keySet()){
              List<String> orderList = orderPartnerPairMap.get(key);
-             unassignedCount += orderList.size();
+             assignedCount += orderList.size();
          }
-         return orderHashMap.size() - unassignedCount;
+         return orderHashMap.size() - assignedCount;
      }
 
 
