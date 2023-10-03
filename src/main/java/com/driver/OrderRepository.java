@@ -30,6 +30,10 @@ public class OrderRepository {
      }
 
      public void addOrderPartnerPairToDB(String orderId, String partnerId){
+         if(unassignedOrderMap.containsKey(orderId)){
+             unassignedOrderMap.remove(orderId);
+         }
+
          if(orderPartnerPairMap.containsKey(partnerId)){
              List<String> orderList = orderPartnerPairMap.get(partnerId);
              orderList.add(orderId);
@@ -39,9 +43,6 @@ public class OrderRepository {
              List<String> orderList = new ArrayList<>();
              orderList.add(orderId);
              orderPartnerPairMap.put(partnerId,orderList);
-         }
-         if(unassignedOrderMap.containsKey(orderId)){
-             unassignedOrderMap.remove(orderId);
          }
      }
 
@@ -80,11 +81,7 @@ public class OrderRepository {
 
      public void deletePartnerIdFromDB(String partnerId){
          if(orderPartnerPairMap.containsKey(partnerId)){
-             List<String> orderList = orderPartnerPairMap.get(partnerId);
              orderPartnerPairMap.remove(partnerId);
-             for(String orderId : orderList){
-                 unassignedOrderMap.put(orderId,orderHashMap.get(orderId));
-             }
          }
      }
 
