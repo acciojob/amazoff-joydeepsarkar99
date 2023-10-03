@@ -8,17 +8,11 @@ import java.util.List;
 
 @Repository
 public class OrderRepository {
-     HashMap<String,Order> orderHashMap;
-     HashMap<String,Order> unassignedOrderMap;
-     HashMap<String,DeliveryPartner> partnerHashMap;
-     HashMap<String, List<String>> orderPartnerPairMap;
+     HashMap<String,Order> orderHashMap = new HashMap<>();
+     HashMap<String,Order> unassignedOrderMap = new HashMap<>();
+     HashMap<String,DeliveryPartner> partnerHashMap = new HashMap<>();
+     HashMap<String, List<String>> orderPartnerPairMap = new HashMap<>();
 
-     OrderRepository(){
-         orderHashMap = new HashMap<>();
-         unassignedOrderMap = new HashMap<>();
-         partnerHashMap = new HashMap<>();
-         orderPartnerPairMap = new HashMap<>();
-     }
      public void addOrderToDB(Order order){
          String key = order.getId();
          orderHashMap.put(key,order);
@@ -80,6 +74,7 @@ public class OrderRepository {
 
 
      public void deletePartnerIdFromDB(String partnerId){
+         partnerHashMap.remove(partnerId);
          if(orderPartnerPairMap.containsKey(partnerId)){
              List<String> orderList = orderPartnerPairMap.get(partnerId);
              orderPartnerPairMap.remove(partnerId);
