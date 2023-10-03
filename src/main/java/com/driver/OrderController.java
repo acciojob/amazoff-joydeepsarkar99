@@ -103,7 +103,7 @@ public class OrderController {
         Integer countOfOrders = 0;
         countOfOrders = orderService.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
 
-        //countOfOrders that are left after a particular time of a DeliveryPartner
+        //countOfOrders that are left after a  particular time of a DeliveryPartner
 
         return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
     }
