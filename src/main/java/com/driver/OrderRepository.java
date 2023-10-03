@@ -34,17 +34,14 @@ public class OrderRepository {
              List<String> orderList = orderPartnerPairMap.get(partnerId);
              orderList.add(orderId);
              orderPartnerPairMap.put(partnerId,orderList);
-             if(unassignedOrderMap.containsKey(orderId)){
-                 unassignedOrderMap.remove(orderId);
-             }
          }
          else{
              List<String> orderList = new ArrayList<>();
              orderList.add(orderId);
              orderPartnerPairMap.put(partnerId,orderList);
-             if(unassignedOrderMap.containsKey(orderId)){
-                 unassignedOrderMap.remove(orderId);
-             }
+         }
+         if(unassignedOrderMap.containsKey(orderId)){
+             unassignedOrderMap.remove(orderId);
          }
      }
 
@@ -76,7 +73,8 @@ public class OrderRepository {
      }
 
      public int getCountOfUnassignedOrdersFromDB(){
-         return unassignedOrderMap.size();
+         if(unassignedOrderMap.size() != 0) return unassignedOrderMap.size();
+         return 0;
      }
 
 

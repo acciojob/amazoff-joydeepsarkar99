@@ -54,7 +54,7 @@ public class OrderController {
     public ResponseEntity<DeliveryPartner> getPartnerById(@PathVariable String partnerId){
 
         DeliveryPartner deliveryPartner = null;
-        orderService.getPartnerById(partnerId);
+        deliveryPartner = orderService.getPartnerById(partnerId);
         //deliveryPartner should contain the value given by partnerId
 
         return new ResponseEntity<>(deliveryPartner, HttpStatus.CREATED);
