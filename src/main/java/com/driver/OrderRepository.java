@@ -8,11 +8,17 @@ import java.util.List;
 
 @Repository
 public class OrderRepository {
-     HashMap<String,Order> orderHashMap = new HashMap<>();
-     HashMap<String,Order> unassignedOrderMap = new HashMap<>();
-     HashMap<String,DeliveryPartner> partnerHashMap = new HashMap<>();
-     HashMap<String, List<String>> orderPartnerPairMap = new HashMap<>();
+     HashMap<String,Order> orderHashMap;
+     HashMap<String,Order> unassignedOrderMap;
+     HashMap<String,DeliveryPartner> partnerHashMap;
+     HashMap<String, List<String>> orderPartnerPairMap;
 
+     OrderRepository(){
+         orderHashMap = new HashMap<>();
+         unassignedOrderMap = new HashMap<>();
+         partnerHashMap = new HashMap<>();
+         orderPartnerPairMap = new HashMap<>();
+     }
      public void addOrderToDB(Order order){
          String key = order.getId();
          orderHashMap.put(key,order);
