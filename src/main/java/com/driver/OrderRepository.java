@@ -11,12 +11,10 @@ public class OrderRepository {
      HashMap<String,Order> orderHashMap = new HashMap<>();
      HashMap<String,DeliveryPartner> partnerHashMap = new HashMap<>();
      HashMap<String, List<String>> orderPartnerPairMap = new HashMap<>();
-     private int totalOrderCount = 0;
 
      public void addOrderToDB(Order order){
          String key = order.getId();
          orderHashMap.put(key,order);
-         totalOrderCount++;
      }
 
      public void addPartnerToDB(String partnerId){
@@ -42,8 +40,7 @@ public class OrderRepository {
      }
 
      public DeliveryPartner getPartnerByIdFromDB(String partnerId){
-         if(partnerHashMap.containsKey(partnerId)) return partnerHashMap.get(partnerId);
-         return null;
+         return partnerHashMap.get(partnerId);
      }
 
      public List<String> getOrderCountByPartnerIdFromDB(String partnerId){
@@ -69,7 +66,7 @@ public class OrderRepository {
              List<String> orderList = orderPartnerPairMap.get(key);
              unassignedCount += orderList.size();
          }
-         return totalOrderCount - unassignedCount;
+         return orderHashMap.size() - unassignedCount;
      }
 
 
