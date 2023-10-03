@@ -9,14 +9,14 @@ import java.util.List;
 @Repository
 public class OrderRepository {
      HashMap<String,Order> orderHashMap = new HashMap<>();
-     HashMap<String,Order> unassignedOrderMap = new HashMap<>();
      HashMap<String,DeliveryPartner> partnerHashMap = new HashMap<>();
      HashMap<String, List<String>> orderPartnerPairMap = new HashMap<>();
+     private int totalOrderCount = 0;
 
      public void addOrderToDB(Order order){
          String key = order.getId();
          orderHashMap.put(key,order);
-         unassignedOrderMap.put(key,order);
+         totalOrderCount++;
      }
 
      public void addPartnerToDB(String partnerId){
@@ -24,10 +24,6 @@ public class OrderRepository {
      }
 
      public void addOrderPartnerPairToDB(String orderId, String partnerId){
-         if(unassignedOrderMap.containsKey(orderId)){
-             unassignedOrderMap.remove(orderId);
-         }
-
          if(orderPartnerPairMap.containsKey(partnerId)){
              List<String> orderList = orderPartnerPairMap.get(partnerId);
              orderList.add(orderId);
@@ -68,25 +64,22 @@ public class OrderRepository {
      }
 
      public int getCountOfUnassignedOrdersFromDB(){
-         if(unassignedOrderMap.size() != 0) return unassignedOrderMap.size();
-         return 0;
+         int unassignedCount = 0;
+         for(String key : orderPartnerPairMap.keySet()){
+             List<String> orderList = orderPartnerPairMap.get(key);
+             unassignedCount += orderList.size();
+         }
+         return totalOrderCount - unassignedCount;
      }
 
 
      public void deletePartnerIdFromDB(String partnerId){
          partnerHashMap.remove(partnerId);
-         if(orderPartnerPairMap.containsKey(partnerId)){
-             List<String> orderList = orderPartnerPairMap.get(partnerId);
-             orderPartnerPairMap.remove(partnerId);
-             for(String orderId : orderList){
-                 unassignedOrderMap.put(orderId,orderHashMap.get(orderId));
-             }
-         }
+         orderPartnerPairMap.remove(partnerId);
      }
 
      public void deleteOrderByIdFromDB(String orderId){
          orderHashMap.remove(orderId);
-         unassignedOrderMap.remove(orderId);
          for(String key : orderPartnerPairMap.keySet()){
              List<String> orderList = orderPartnerPairMap.get(key);
              if(orderList.indexOf(orderId) != -1){

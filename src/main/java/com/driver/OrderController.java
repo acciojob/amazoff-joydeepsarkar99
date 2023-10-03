@@ -43,7 +43,7 @@ public class OrderController {
     @GetMapping("/get-order-by-id/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable String orderId){
 
-        Order order= null;
+        Order order = null;
         order = orderService.getOrderById(orderId);
         //order should be returned with an orderId.
 
