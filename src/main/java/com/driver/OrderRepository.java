@@ -81,17 +81,23 @@ public class OrderRepository {
 
      public void deletePartnerIdFromDB(String partnerId){
          if(orderPartnerPairMap.containsKey(partnerId)){
+             List<String> orderList = orderPartnerPairMap.get(partnerId);
              orderPartnerPairMap.remove(partnerId);
+             for(String orderId : orderList){
+                 unassignedOrderMap.put(orderId,orderHashMap.get(orderId));
+             }
          }
      }
 
      public void deleteOrderByIdFromDB(String orderId){
          orderHashMap.remove(orderId);
+         unassignedOrderMap.remove(orderId);
          for(String key : orderPartnerPairMap.keySet()){
              List<String> orderList = orderPartnerPairMap.get(key);
              if(orderList.indexOf(orderId) != -1){
                  int idx = orderList.indexOf(orderId);
                  orderList.remove(idx);
+                 orderPartnerPairMap.put(key,orderList);
              }
          }
      }
